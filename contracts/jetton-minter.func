@@ -34,6 +34,10 @@ const int provide_address_gas_consumption = 10000000;
     );
 }
 
+int calc_price() {
+    ;; bonding curve formula
+}
+
 () mint_tokens(slice to_address, cell jetton_wallet_code, int amount, cell master_msg) impure {
     cell state_init = calculate_jetton_wallet_state_init(to_address, my_address(), jetton_wallet_code);
     slice to_wallet_address = calc_address(state_init);
@@ -160,4 +164,20 @@ const int provide_address_gas_consumption = 10000000;
 slice get_wallet_address(slice owner_address) method_id {
     (int total_supply, slice admin_address, cell content, cell jetton_wallet_code) = load_data();
     return calc_user_wallet(owner_address, my_address(), jetton_wallet_code);
+}
+
+int getBuyAmount(int amount) method_id {
+
+    int jettons_received = 0;
+    int remaining_ton = amount;
+
+    while (remaining_ton > 0) {
+        int price_for_next_jetton = calc_price(current_supply + jettons_received + 1);
+        if (remaining_ton >= price_for_next_jetton) {
+            remaining_ton -= price_for_next_jetton;
+            jettons_received += 1;
+        }
+    }
+
+    return (jettons_received); ;; Return received Jettons and remaining TO
 }
