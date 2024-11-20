@@ -15,6 +15,10 @@ const int op::mint = 0x1674b0a0;
 const int op::change_admin = 0x4840664f;
 const int op::change_content = 0x5773d1f5;
 
+;; Custom
+
+const int op::bonding_curve_buy = "bonding_curve_buy"c;
+
 (slice, (int)) ~load_op(slice s) inline { return s.load_uint(32); }
 (slice, (int)) ~load_query_id(slice s) inline { return s.load_uint(64); }
 builder store_op(builder b, int op) inline { return b.store_uint(op, 32); }
