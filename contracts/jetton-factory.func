@@ -1,0 +1,63 @@
+global int factory_index;
+global int next_jetton_minter_index;
+global slice owner_address;
+global cell jetton_minter_code;
+global cell jetton_wallet_code;
+
+() save_data() impure inline {
+    set_data(
+        begin_cell()
+
+        .end_cell()); }
+
+() load_data() impure inline {
+    slice ds = get_data().begin_parse();
+
+}
+
+cell calculate_jetton_minter_state_init() inline {
+
+}
+
+slice calculate_jetton_minter_address() {
+
+}
+
+() deploy_jetton_minter() {
+
+    cell state_init = calculate_jetton_minter_state_init(index, nft_collection_code);
+    slice nft_collection_address = calculate_collection_address(0, state_init);
+    cell msg_body = begin_cell().end_cell();
+    var msg = begin_cell();
+    send_raw_message(msg.end_cell(), 1);
+
+}
+
+() deploy_presale() {
+
+}
+
+() deploy_sale() {
+
+}
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4); if (flags & 1) { return (); }
+    slice sender_address = cs~load_msg_addr();
+    load_data();
+    ifnot (equal_slices(sender_address, owner)) {
+        ;; If messege is not from the owner, then it is buy
+
+        ;; Check if the amount reaches the target amount
+        ;; Deploy sale and create liquidity pool
+    }
+    int op = in_msg_body~load_uint(32);
+    int query_id = in_msg_body~load_uint(64);
+
+    if (op == op::deploy_presale) {
+
+    }
+
+    throw(0xffff);
+}
